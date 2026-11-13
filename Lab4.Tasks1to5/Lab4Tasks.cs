@@ -39,9 +39,11 @@ public static class Lab4Tasks
 
             try
             {
-                var list = input.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                .Select(int.Parse)
-                                .ToList();
+                string[] parts = input.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                List<int> list = new List<int>();
+                foreach (string part in parts) {
+                    list.Add(int.Parse(part));
+                }
                 return list;
             }
             catch
@@ -217,7 +219,16 @@ public static class Lab4Tasks
             return; 
         }
 
-        participants = participants.OrderByDescending(p => p.Score).ToList();
+
+        for (int i = 0; i < participants.Count; i++) {
+            for (int j = i + 1; j < participants.Count; j++) {
+                if (participants[i].Score < participants[j].Score) {
+                    var temp = participants[i];
+                    participants[i] = participants[j];
+                    participants[j] = temp;
+                }
+            }
+        }
 
         int count25 = participants.Count * 25 / 100;
         
